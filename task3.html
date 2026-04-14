@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Creative Temperature Converter</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", sans-serif;
+}
+
+/* BACKGROUND */
+body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #4f46e5, #22c55e);
+}
+
+/* CARD */
+.container {
+    backdrop-filter: blur(15px);
+    background: rgba(255,255,255,0.1);
+    border-radius: 15px;
+    padding: 30px;
+    width: 320px;
+    text-align: center;
+    color: white;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+    animation: fadeIn 1s ease;
+}
+
+@keyframes fadeIn {
+    from {opacity: 0; transform: translateY(20px);}
+    to {opacity: 1; transform: translateY(0);}
+}
+
+h2 {
+    margin-bottom: 20px;
+}
+
+/* INPUT */
+input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    margin-bottom: 10px;
+    outline: none;
+    font-size: 16px;
+}
+
+/* SELECT */
+select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    margin-bottom: 15px;
+}
+
+/* BUTTON */
+button {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    background: #22c55e;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    transform: scale(1.05);
+    background: #16a34a;
+}
+
+/* RESULT */
+.result {
+    margin-top: 15px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* SWAP BUTTON */
+.swap {
+    margin: 10px 0;
+    cursor: pointer;
+    font-size: 20px;
+    transition: 0.3s;
+}
+
+.swap:hover {
+    transform: rotate(180deg);
+}
+</style>
+
+</head>
+<body>
+
+<div class="container">
+    <h2>🌡️ Temperature Converter</h2>
+
+    <input type="number" id="temp" placeholder="Enter temperature">
+
+    <select id="unit">
+        <option value="c">Celsius → Fahrenheit</option>
+        <option value="f">Fahrenheit → Celsius</option>
+        <option value="k">Celsius → Kelvin</option>
+    </select>
+
+    <div class="swap" onclick="swapUnits()">🔄</div>
+
+    <button onclick="convertTemp()">Convert</button>
+
+    <div class="result" id="result"></div>
+</div>
+
+<script>
+function convertTemp() {
+    let temp = document.getElementById("temp").value;
+    let unit = document.getElementById("unit").value;
+    let result = document.getElementById("result");
+
+    if (temp === "") {
+        result.innerHTML = "⚠️ Enter a value!";
+        return;
+    }
+
+    temp = parseFloat(temp);
+    let output;
+
+    if (unit === "c") {
+        output = (temp * 9/5 + 32).toFixed(2) + " °F";
+    } else if (unit === "f") {
+        output = ((temp - 32) * 5/9).toFixed(2) + " °C";
+    } else {
+        output = (temp + 273.15).toFixed(2) + " K";
+    }
+
+    result.innerHTML = "✨ " + output;
+}
+
+/* SWAP FUNCTION */
+function swapUnits() {
+    let select = document.getElementById("unit");
+
+    if (select.value === "c") select.value = "f";
+    else if (select.value === "f") select.value = "c";
+}
+</script>
+
+</body>
+</html>
